@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <style>
+    .logo-teal { fill: #1EBBA6; }
+    .logo-green { fill: #19A45E; }
+  </style>
+  <g transform="translate(20, 20)">
+    <!-- Diamond shape with QBitX colors -->
+    <polygon class="logo-teal" points="80,0 160,80 80,160 0,80" />
+    <polygon class="logo-green" points="80,30 130,80 80,130 30,80" />
+    <!-- Center cutout -->
+    <rect x="60" y="60" width="40" height="40" fill="white" />
+  </g>
+</svg> 

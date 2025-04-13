@@ -1,0 +1,553 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+{% block meta_description %}QBITX Solutions - Leading provider of innovative software development, web applications, mobile apps, ERP solutions, and digital marketing services.{% endblock %}
+{% block meta_keywords %}software development, web development, mobile app development, digital transformation, ERP, e-commerce, digital marketing, QBITX Solutions{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    {% if hero %}
+    <div class="hero-bg" style="background-image: url('{{ hero.image.url }}');"></div>
+    {% else %}
+    <div class="hero-bg" style="background-image: url('{% static "images/hero-bg.jpg" %}');"></div>
+    {% endif %}
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 hero-content" data-aos="fade-up">
+                {% if hero %}
+                <h1>{{ hero.title }}</h1>
+                <p>{{ hero.subtitle }}</p>
+                <div>{{ hero.description|safe }}</div>
+                <div class="mt-4">
+                    <a href="{{ hero.button_url }}" class="btn btn-primary btn-lg">{{ hero.button_text }}</a>
+                    <a href="{% url 'contact:contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>
+                </div>
+                {% else %}
+                <h1>Innovative Digital Solutions for Modern Businesses</h1>
+                <p>We transform ideas into powerful digital experiences with cutting-edge technology and creative expertise.</p>
+                <div class="mt-4">
+                    <a href="{% url 'services:service_list' %}" class="btn btn-primary btn-lg">Explore Services</a>
+                    <a href="{% url 'contact:contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Service Overview Section -->
+<section class="service-overview py-5">
+    <div class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Our Services</h2>
+            <p>We offer a comprehensive range of digital solutions to help your business grow and succeed in the digital landscape.</p>
+        </div>
+        
+        <div class="row">
+            {% if featured_services %}
+                {% for service in featured_services %}
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                    <div class="service-card h-100">
+                        <div class="service-img">
+                            <img src="{{ service.image.url }}" alt="{{ service.name }}">
+                            <div class="service-icon">
+                                <i class="{{ service.icon }}"></i>
+                            </div>
+                        </div>
+                        <div class="service-content">
+                            <h3>{{ service.name }}</h3>
+                            <p>{{ service.short_description|truncatechars:120 }}</p>
+                            <a href="{% url 'services:service_detail' service.slug %}" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default services if none exist in the database -->
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-card h-100">
+                        <div class="service-img">
+                            <img src="{% static 'images/services/web-development.jpg' %}" alt="Web Development">
+                            <div class="service-icon">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                        </div>
+                        <div class="service-content">
+                            <h3>Web Development</h3>
+                            <p>Custom websites and web applications designed to meet your specific business requirements.</p>
+                            <a href="{% url 'services:service_list' %}" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-card h-100">
+                        <div class="service-img">
+                            <img src="{% static 'images/services/ecommerce.jpg' %}" alt="E-Commerce Solutions">
+                            <div class="service-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                        </div>
+                        <div class="service-content">
+                            <h3>E-Commerce Solutions</h3>
+                            <p>Scalable and secure online stores that provide seamless shopping experiences for your customers.</p>
+                            <a href="{% url 'services:service_list' %}" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-card h-100">
+                        <div class="service-img">
+                            <img src="{% static 'images/services/mobile-app.jpg' %}" alt="Mobile App Development">
+                            <div class="service-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                        </div>
+                        <div class="service-content">
+                            <h3>Mobile App Development</h3>
+                            <p>Native and cross-platform mobile applications that engage users and drive business growth.</p>
+                            <a href="{% url 'services:service_list' %}" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="text-center mt-4" data-aos="fade-up">
+            <a href="{% url 'services:service_list' %}" class="btn btn-primary">View All Services</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Why Choose Us</h2>
+            <p>We deliver exceptional value through our expertise, innovative solutions, and client-centered approach.</p>
+        </div>
+        
+        <div class="row">
+            {% if features %}
+                {% for feature in features %}
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                    <div class="feature-box h-100">
+                        <div class="feature-icon">
+                            <i class="{{ feature.icon }}"></i>
+                        </div>
+                        <h3>{{ feature.title }}</h3>
+                        <p>{{ feature.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default features if none exist in the database -->
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-box h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>Expert Development</h3>
+                        <p>Our team of experienced developers uses the latest technologies to build high-quality, scalable solutions.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-box h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3>Creative Design</h3>
+                        <p>We create visually stunning, user-friendly interfaces that enhance user experience and drive engagement.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-box h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>Agile Methodology</h3>
+                        <p>Our agile approach ensures flexibility, transparency, and continuous improvement throughout development.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-box h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Dedicated Support</h3>
+                        <p>We provide ongoing support and maintenance to ensure your solutions operate optimally at all times.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-box h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Results-Driven</h3>
+                        <p>We focus on delivering measurable results that help your business grow and succeed in the digital world.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-box h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3>Security First</h3>
+                        <p>Security is integrated throughout our development process to protect your data and applications.</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section class="projects-section py-5">
+    <div class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Our Recent Projects</h2>
+            <p>Explore some of our recent work that demonstrates our expertise and capabilities.</p>
+        </div>
+        
+        <div class="row">
+            {% if featured_projects %}
+                {% for project in featured_projects %}
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{{ project.thumbnail.url }}" alt="{{ project.title }}">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>{{ project.title }}</h3>
+                                    <p>{{ project.short_description|truncatechars:60 }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">{{ project.category.name }}</span>
+                        <a href="{% url 'projects:project_detail' project.slug %}" class="stretched-link"></a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default projects if none exist in the database -->
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{% static 'images/projects/project1.jpg' %}" alt="E-Commerce Platform">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>E-Commerce Platform</h3>
+                                    <p>A comprehensive online shopping solution for a retail business.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">E-Commerce</span>
+                        <a href="{% url 'projects:project_list' %}" class="stretched-link"></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{% static 'images/projects/project2.jpg' %}" alt="Mobile Banking App">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>Mobile Banking App</h3>
+                                    <p>Secure and user-friendly mobile banking application.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">Mobile App</span>
+                        <a href="{% url 'projects:project_list' %}" class="stretched-link"></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{% static 'images/projects/project3.jpg' %}" alt="ERP System">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>ERP System</h3>
+                                    <p>Comprehensive enterprise resource planning solution for manufacturing.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">Enterprise</span>
+                        <a href="{% url 'projects:project_list' %}" class="stretched-link"></a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="text-center mt-4" data-aos="fade-up">
+            <a href="{% url 'projects:project_list' %}" class="btn btn-primary">View All Projects</a>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row">
+            {% if statistics %}
+                {% for stat in statistics %}
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                    <div class="counter-box bg-transparent text-white border-0 shadow-none">
+                        <div class="counter-icon">
+                            <i class="{{ stat.icon }}"></i>
+                        </div>
+                        <div class="counter-value" data-count="{{ stat.value }}">0</div>
+                        <h5 class="counter-title text-white">{{ stat.title }}</h5>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default stats if none exist in the database -->
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
+                    <div class="counter-box bg-transparent text-white border-0 shadow-none">
+                        <div class="counter-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="counter-value" data-count="250">0</div>
+                        <h5 class="counter-title text-white">Projects Completed</h5>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
+                    <div class="counter-box bg-transparent text-white border-0 shadow-none">
+                        <div class="counter-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="counter-value" data-count="120">0</div>
+                        <h5 class="counter-title text-white">Happy Clients</h5>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="300">
+                    <div class="counter-box bg-transparent text-white border-0 shadow-none">
+                        <div class="counter-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="counter-value" data-count="50">0</div>
+                        <h5 class="counter-title text-white">Team Members</h5>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="400">
+                    <div class="counter-box bg-transparent text-white border-0 shadow-none">
+                        <div class="counter-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="counter-value" data-count="25">0</div>
+                        <h5 class="counter-title text-white">Awards Won</h5>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section py-5">
+    <div class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Client Testimonials</h2>
+            <p>Hear what our clients have to say about their experience working with us.</p>
+        </div>
+        
+        <div class="row">
+            {% if testimonials %}
+                {% for testimonial in testimonials %}
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                    <div class="testimonial-card h-100">
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">{{ testimonial.content|truncatechars:200 }}</p>
+                            <div class="client-info">
+                                <div class="client-img">
+                                    <img src="{{ testimonial.client_image.url }}" alt="{{ testimonial.client_name }}">
+                                </div>
+                                <div class="client-details">
+                                    <h5>{{ testimonial.client_name }}</h5>
+                                    <p>{{ testimonial.client_position }}, {{ testimonial.client_company }}</p>
+                                    <div class="testimonial-rating">
+                                        {% for i in "12345" %}
+                                            {% if forloop.counter <= testimonial.rating %}
+                                                <i class="fas fa-star"></i>
+                                            {% else %}
+                                                <i class="far fa-star"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default testimonials if none exist in the database -->
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-card h-100">
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">"QBITX Solutions delivered an exceptional e-commerce platform that has significantly improved our online sales. Their team was professional, responsive, and truly understood our business needs."</p>
+                            <div class="client-info">
+                                <div class="client-img">
+                                    <img src="{% static 'images/testimonials/client1.jpg' %}" alt="John Smith">
+                                </div>
+                                <div class="client-details">
+                                    <h5>John Smith</h5>
+                                    <p>CEO, Retail Solutions Inc.</p>
+                                    <div class="testimonial-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-card h-100">
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">"Working with QBITX on our mobile app development project was a fantastic experience. Their technical expertise and attention to detail resulted in a seamless, user-friendly application."</p>
+                            <div class="client-info">
+                                <div class="client-img">
+                                    <img src="{% static 'images/testimonials/client2.jpg' %}" alt="Sarah Johnson">
+                                </div>
+                                <div class="client-details">
+                                    <h5>Sarah Johnson</h5>
+                                    <p>Marketing Director, Tech Innovations</p>
+                                    <div class="testimonial-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="testimonial-card h-100">
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">"The ERP system developed by QBITX has transformed our operations, increasing efficiency and providing valuable insights into our business processes. Their support team is responsive and helpful."</p>
+                            <div class="client-info">
+                                <div class="client-img">
+                                    <img src="{% static 'images/testimonials/client3.jpg' %}" alt="Michael Chen">
+                                </div>
+                                <div class="client-details">
+                                    <h5>Michael Chen</h5>
+                                    <p>Operations Manager, Global Manufacturing</p>
+                                    <div class="testimonial-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Clients Section -->
+<section class="clients-section py-5 bg-light">
+    <div class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Our Clients</h2>
+            <p>We're proud to work with leading companies across various industries.</p>
+        </div>
+        
+        <div class="row align-items-center">
+            {% if clients %}
+                {% for client in clients %}
+                <div class="col-lg-3 col-md-4 col-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:50 }}">
+                    <div class="client-logo text-center">
+                        {% if client.website_url %}
+                        <a href="{{ client.website_url }}" target="_blank">
+                            <img src="{{ client.logo.url }}" alt="{{ client.name }}" class="img-fluid">
+                        </a>
+                        {% else %}
+                        <img src="{{ client.logo.url }}" alt="{{ client.name }}" class="img-fluid">
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default client logos if none exist in the database -->
+                <div class="col-lg-3 col-md-4 col-6 mb-4" data-aos="fade-up" data-aos-delay="50">
+                    <div class="client-logo text-center">
+                        <img src="{% static 'images/clients/client1.png' %}" alt="Client 1" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="client-logo text-center">
+                        <img src="{% static 'images/clients/client2.png' %}" alt="Client 2" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-6 mb-4" data-aos="fade-up" data-aos-delay="150">
+                    <div class="client-logo text-center">
+                        <img src="{% static 'images/clients/client3.png' %}" alt="Client 3" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="client-logo text-center">
+                        <img src="{% static 'images/clients/client4.png' %}" alt="Client 4" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-6 mb-4" data-aos="fade-up" data-aos-delay="250">
+                    <div class="client-logo text-center">
+                        <img src="{% static 'images/clients/client5.png' %}" alt="Client 5" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="client-logo text-center">
+                        <img src="{% static 'images/clients/client6.png' %}" alt="Client 6" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-6 mb-4" data-aos="fade-up" data-aos-delay="350">
+                    <div class="client-logo text-center">
+                        <img src="{% static 'images/clients/client7.png' %}" alt="Client 7" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="client-logo text-center">
+                        <img src="{% static 'images/clients/client8.png' %}" alt="Client 8" class="img-fluid">
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter-section py-5 bg-secondary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h2 class="mb-3">Subscribe to Our Newsletter</h2>
+                <p class="mb-lg-0">Stay updated with our latest news, services, and digital insights. Join our mailing list today!</p>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <form action="{% url 'home:newsletter_subscription' %}" method="post" class="newsletter-form">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="email" name="email" class="form-control form-control-lg" placeholder="Your Email Address" required>
+                        <input type="text" name="name" class="form-control form-control-lg" placeholder="Your Name (optional)">
+                        <button class="btn btn-light" type="submit">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ) -->
+{% endblock %}
