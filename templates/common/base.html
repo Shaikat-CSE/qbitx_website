@@ -83,7 +83,7 @@
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{% url 'home:home' %}">
                         <img src="{% static 'images/logo.png' %}" alt="QBITX Solutions Logo" class="img-fluid" style="max-height: 50px;">
-                        <span class="text-white d-none d-sm-inline-block ms-2">QBITX Solutions</span>
+                        <span class="logo-text text-white d-none d-sm-inline-block ms-2">QBITX Solutions</span>
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
                             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -161,9 +161,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 mb-4 mb-lg-0">
-                    <h4 class="mb-4">
-                        <img src="{% static 'images/logo.png' %}" alt="QBITX Solutions Logo" class="img-fluid mb-3" style="max-height: 60px; filter: brightness(0) invert(1);">
-                    </h4>
+                    <div class="footer-logo mb-4">
+                        <a href="{% url 'home:home' %}" class="d-flex align-items-center text-decoration-none">
+                            <img src="{% static 'images/logo.png' %}" alt="QBITX Solutions Logo" class="img-fluid" style="max-height: 50px;">
+                            <span class="text-white d-none d-sm-inline-block ms-2 h4 mb-0">QBITX Solutions</span>
+                        </a>
+                    </div>
                     <p>
                         {% if company_info %}
                         {{ company_info.about_short|truncatewords:30 }}

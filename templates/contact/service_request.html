@@ -1,0 +1,427 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block title %}Request a Quote{% endblock %}
+{% block meta_description %}Request a free quote for your software development, web design, mobile app, or digital marketing project from QBITX Solutions.{% endblock %}
+{% block meta_keywords %}quote request, project quote, software development quote, web development cost, mobile app estimate{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-primary">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center text-white">
+                <h1>Request a Quote</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home:home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'contact:contact' %}" class="text-white">Contact</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Request a Quote</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quote Request Intro -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <h2 class="mb-4">Get a Personalized Quote for Your Project</h2>
+                <p class="lead mb-5">Fill out the form below with details about your project, and our team will provide you with a custom quote. We'll analyze your requirements and suggest the best approach to achieve your business goals.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quote Request Form Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10" data-aos="fade-up">
+                <div class="quote-form-container bg-white p-5 rounded shadow-sm">
+                    {% if messages %}
+                    <div class="messages mb-4">
+                        {% for message in messages %}
+                        <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <form action="{% url 'contact:service_request' %}" method="post" class="quote-request-form" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Personal Information -->
+                        <h4 class="mb-4">Contact Information</h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Full Name <span class="text-danger">*</span></label>
+                                <input type="text" name="name" id="name" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="company" class="form-label">Company Name</label>
+                                <input type="text" name="company" id="company" class="form-control">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                <input type="email" name="email" id="email" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" name="phone" id="phone" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <!-- Project Details -->
+                        <h4 class="mb-4">Project Details</h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="service_type" class="form-label">Service Type <span class="text-danger">*</span></label>
+                                <select name="service_type" id="service_type" class="form-select" required>
+                                    <option value="" selected disabled>Select a service</option>
+                                    {% if service_types %}
+                                        {% for service in service_types %}
+                                        <option value="{{ service.id }}" {% if selected_service == service.id %}selected{% endif %}>{{ service.name }}</option>
+                                        {% endfor %}
+                                    {% else %}
+                                        <option value="web_development">Web Development</option>
+                                        <option value="mobile_app">Mobile App Development</option>
+                                        <option value="e_commerce">E-Commerce Solutions</option>
+                                        <option value="erp_solutions">ERP Solutions</option>
+                                        <option value="digital_marketing">Digital Marketing</option>
+                                        <option value="it_consulting">IT Consulting</option>
+                                        <option value="custom_software">Custom Software Development</option>
+                                        <option value="other">Other (Please specify)</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="budget" class="form-label">Estimated Budget</label>
+                                <select name="budget" id="budget" class="form-select">
+                                    <option value="" selected disabled>Select budget range</option>
+                                    <option value="less_than_5k">Less than $5,000</option>
+                                    <option value="5k_10k">$5,000 - $10,000</option>
+                                    <option value="10k_25k">$10,000 - $25,000</option>
+                                    <option value="25k_50k">$25,000 - $50,000</option>
+                                    <option value="50k_100k">$50,000 - $100,000</option>
+                                    <option value="more_than_100k">More than $100,000</option>
+                                    <option value="not_sure">Not sure yet</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="timeline" class="form-label">Timeline</label>
+                                <select name="timeline" id="timeline" class="form-select">
+                                    <option value="" selected disabled>Select timeline</option>
+                                    <option value="less_than_1_month">Less than 1 month</option>
+                                    <option value="1_3_months">1-3 months</option>
+                                    <option value="3_6_months">3-6 months</option>
+                                    <option value="6_12_months">6-12 months</option>
+                                    <option value="more_than_12_months">More than 12 months</option>
+                                    <option value="not_sure">Not sure yet</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="start_date" class="form-label">Preferred Start Date</label>
+                                <input type="date" name="start_date" id="start_date" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <!-- Project Description -->
+                        <div class="mb-4">
+                            <label for="project_description" class="form-label">Project Description <span class="text-danger">*</span></label>
+                            <textarea name="project_description" id="project_description" class="form-control" rows="6" placeholder="Please describe your project, including its purpose, target audience, key features, and any specific requirements." required></textarea>
+                        </div>
+                        
+                        <!-- Additional Information -->
+                        <div class="mb-4">
+                            <label for="additional_info" class="form-label">Additional Information</label>
+                            <textarea name="additional_info" id="additional_info" class="form-control" rows="3" placeholder="Any other details you would like to share about your project or specific questions you have."></textarea>
+                        </div>
+                        
+                        <!-- File Attachments -->
+                        <div class="mb-4">
+                            <label for="attachments" class="form-label">Attachments (optional)</label>
+                            <input type="file" name="attachments" id="attachments" class="form-control" multiple>
+                            <div class="form-text">You can attach files such as project briefs, design mockups, or any relevant documents (max 5 files, 10MB each).</div>
+                        </div>
+                        
+                        <!-- How did you hear about us? -->
+                        <div class="mb-4">
+                            <label for="referral_source" class="form-label">How did you hear about us?</label>
+                            <select name="referral_source" id="referral_source" class="form-select">
+                                <option value="" selected disabled>Select option</option>
+                                <option value="search_engine">Search Engine (Google, Bing, etc.)</option>
+                                <option value="social_media">Social Media</option>
+                                <option value="referral">Referral from a friend/colleague</option>
+                                <option value="online_ad">Online Advertisement</option>
+                                <option value="blog_article">Blog Article</option>
+                                <option value="review_site">Review Site</option>
+                                <option value="event">Event or Conference</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Privacy Policy Agreement -->
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" name="privacy_policy" id="privacy_policy" class="form-check-input" required>
+                            <label for="privacy_policy" class="form-check-label">I agree to the <a href="#">Privacy Policy</a> and consent to being contacted about my inquiry. <span class="text-danger">*</span></label>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">Submit Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5" data-aos="fade-up">
+                <h2 class="mb-4">Why Choose QBITX Solutions</h2>
+                <p class="lead">When you partner with us for your digital transformation journey, you get more than just a service provider.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-box h-100">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Expert Team</h3>
+                    <p>Our team consists of highly skilled professionals with extensive experience in various technologies and industries.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-box h-100">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Custom Solutions</h3>
+                    <p>We develop tailored solutions that address your specific business needs and challenges.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-box h-100">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Clear Communication</h3>
+                    <p>We maintain transparent and regular communication throughout your project lifecycle.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5" data-aos="fade-up">
+                <h2 class="mb-4">Our Project Process</h2>
+                <p class="lead">From initial consultation to launch and beyond, our structured process ensures successful project delivery.</p>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="process-timeline">
+                    <div class="process-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="process-number">1</div>
+                        <div class="process-content">
+                            <h4>Initial Consultation</h4>
+                            <p>We discuss your project needs, goals, and expectations to understand your vision.</p>
+                        </div>
+                    </div>
+                    <div class="process-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="process-number">2</div>
+                        <div class="process-content">
+                            <h4>Proposal & Quote</h4>
+                            <p>Based on your requirements, we provide a detailed proposal with timeline and cost estimates.</p>
+                        </div>
+                    </div>
+                    <div class="process-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="process-number">3</div>
+                        <div class="process-content">
+                            <h4>Planning & Design</h4>
+                            <p>We create detailed project plans and design mockups for your approval before development begins.</p>
+                        </div>
+                    </div>
+                    <div class="process-item" data-aos="fade-up" data-aos-delay="400">
+                        <div class="process-number">4</div>
+                        <div class="process-content">
+                            <h4>Development</h4>
+                            <p>Our team develops your solution using the latest technologies and best practices.</p>
+                        </div>
+                    </div>
+                    <div class="process-item" data-aos="fade-up" data-aos-delay="500">
+                        <div class="process-number">5</div>
+                        <div class="process-content">
+                            <h4>Testing & Quality Assurance</h4>
+                            <p>We conduct thorough testing to ensure your solution meets all requirements and quality standards.</p>
+                        </div>
+                    </div>
+                    <div class="process-item" data-aos="fade-up" data-aos-delay="600">
+                        <div class="process-number">6</div>
+                        <div class="process-content">
+                            <h4>Deployment & Launch</h4>
+                            <p>We help you launch your solution and provide training for your team as needed.</p>
+                        </div>
+                    </div>
+                    <div class="process-item" data-aos="fade-up" data-aos-delay="700">
+                        <div class="process-number">7</div>
+                        <div class="process-content">
+                            <h4>Ongoing Support</h4>
+                            <p>We offer continued support and maintenance to ensure your solution performs optimally.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5" data-aos="fade-up">
+                <h2 class="mb-4">What Our Clients Say</h2>
+                <p class="lead">Don't just take our word for it. Here's what some of our clients have to say about working with us.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-card h-100">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">"QBITX Solutions delivered an exceptional e-commerce platform that has significantly improved our online sales. Their team was professional, responsive, and truly understood our business needs."</p>
+                        <div class="client-info">
+                            <div class="client-img">
+                                <img src="{% static 'images/testimonials/client1.jpg' %}" alt="John Smith">
+                            </div>
+                            <div class="client-details">
+                                <h5>John Smith</h5>
+                                <p>CEO, Retail Solutions Inc.</p>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-card h-100">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">"Working with QBITX on our mobile app development project was a fantastic experience. Their technical expertise and attention to detail resulted in a seamless, user-friendly application."</p>
+                        <div class="client-info">
+                            <div class="client-img">
+                                <img src="{% static 'images/testimonials/client2.jpg' %}" alt="Sarah Johnson">
+                            </div>
+                            <div class="client-details">
+                                <h5>Sarah Johnson</h5>
+                                <p>Marketing Director, Tech Innovations</p>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="testimonial-card h-100">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">"The ERP system developed by QBITX has transformed our operations, increasing efficiency and providing valuable insights into our business processes. Their support team is responsive and helpful."</p>
+                        <div class="client-info">
+                            <div class="client-img">
+                                <img src="{% static 'images/testimonials/client3.jpg' %}" alt="Michael Chen">
+                            </div>
+                            <div class="client-details">
+                                <h5>Michael Chen</h5>
+                                <p>Operations Manager, Global Manufacturing</p>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% block extra_css %}
+<style>
+    .process-timeline {
+        position: relative;
+        padding-left: 30px;
+    }
+    
+    .process-timeline:before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        bottom: 0;
+        left: 15px;
+        width: 2px;
+        height: calc(100% - 50px);
+        background-color: var(--gray-light);
+    }
+    
+    .process-item {
+        position: relative;
+        margin-bottom: 40px;
+    }
+    
+    .process-number {
+        position: absolute;
+        left: -30px;
+        top: 0;
+        width: 30px;
+        height: 30px;
+        background-color: var(--primary-color);
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        z-index: 1;
+    }
+    
+    .process-content {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+    }
+</style>
+{% endblock %}
+{% endblock %} 

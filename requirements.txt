@@ -1,0 +1,15 @@
+asgiref==3.8.1
+crispy-bootstrap5==2025.4
+Django==5.2
+django-allauth==65.7.0
+django-appconf==1.1.0
+django-ckeditor==6.7.2
+django-compressor==4.5.1
+django-crispy-forms==2.4
+django-js-asset==3.1.2
+django-tinymce==4.1.0
+pillow==11.2.1
+rcssmin==1.1.2
+rjsmin==1.2.2
+sqlparse==0.5.3
+whitenoise==6.9.0

@@ -1,0 +1,231 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block title %}Our Projects{% endblock %}
+{% block meta_description %}Explore QBITX Solutions' portfolio of successful projects across web development, mobile apps, e-commerce, and enterprise solutions.{% endblock %}
+{% block meta_keywords %}portfolio, projects, case studies, web development projects, mobile app projects, e-commerce projects, software development case studies{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-primary">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center text-white">
+                <h1>Our Projects</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home:home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Projects</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Intro Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <h2 class="mb-4">Our Success Stories</h2>
+                <p class="lead mb-5">Explore our portfolio of successful projects where we've helped businesses achieve their digital transformation goals. Each project showcases our expertise, creative approach, and commitment to delivering exceptional results.</p>
+                
+                {% if categories %}
+                <div class="project-categories mb-5">
+                    <a href="{% url 'projects:project_list' %}" class="btn {% if not selected_category %}btn-primary{% else %}btn-outline-primary{% endif %} m-1">All Projects</a>
+                    {% for category in categories %}
+                    <a href="{% url 'projects:project_list_by_category' category.slug %}" class="btn {% if selected_category.id == category.id %}btn-primary{% else %}btn-outline-primary{% endif %} m-1">{{ category.name }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Grid Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        {% if selected_category %}
+        <div class="section-title" data-aos="fade-up">
+            <h2>{{ selected_category.name }}</h2>
+            <p>{{ selected_category.description }}</p>
+        </div>
+        {% endif %}
+        
+        <div class="row">
+            {% if projects %}
+                {% for project in projects %}
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{{ project.thumbnail.url }}" alt="{{ project.title }}">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>{{ project.title }}</h3>
+                                    <p>{{ project.short_description|truncatechars:60 }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">{{ project.category.name }}</span>
+                        <a href="{% url 'projects:project_detail' project.slug %}" class="stretched-link"></a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default projects if none exist in the database -->
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{% static 'images/projects/project1.jpg' %}" alt="E-Commerce Platform">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>E-Commerce Platform</h3>
+                                    <p>A comprehensive online shopping solution for a retail business.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">E-Commerce</span>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{% static 'images/projects/project2.jpg' %}" alt="Mobile Banking App">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>Mobile Banking App</h3>
+                                    <p>Secure and user-friendly mobile banking application.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">Mobile App</span>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{% static 'images/projects/project3.jpg' %}" alt="ERP System">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>ERP System</h3>
+                                    <p>Comprehensive enterprise resource planning solution for manufacturing.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">Enterprise</span>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{% static 'images/projects/project4.jpg' %}" alt="Corporate Website">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>Corporate Website</h3>
+                                    <p>Modern and responsive website for a financial services company.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">Web Development</span>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{% static 'images/projects/project5.jpg' %}" alt="Fitness App">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>Fitness App</h3>
+                                    <p>Mobile application for tracking workouts and nutrition.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">Mobile App</span>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{% static 'images/projects/project6.jpg' %}" alt="Restaurant Booking System">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>Restaurant Booking System</h3>
+                                    <p>Online reservation system for a chain of restaurants.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">Web Application</span>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        
+        {% if is_paginated %}
+        <div class="row mt-5">
+            <div class="col-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1" aria-label="First">
+                                <span aria-hidden="true">&laquo;&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                            <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                                <span aria-hidden="true">&raquo;&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <h2 class="mb-4">Let's Build Your Project</h2>
+                <p class="lead mb-4">Have a project in mind? We'd love to hear about it! Let's discuss how we can help you achieve your business goals with our expertise in digital solutions.</p>
+                <div>
+                    <a href="{% url 'contact:service_request' %}" class="btn btn-primary btn-lg">Start a Project</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

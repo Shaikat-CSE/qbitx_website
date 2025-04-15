@@ -1,0 +1,413 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block title %}FAQ{% endblock %}
+{% block meta_description %}Frequently asked questions about QBITX Solutions' services, process, and technology solutions.{% endblock %}
+{% block meta_keywords %}FAQ, frequently asked questions, software development FAQ, web development questions, mobile app development{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-primary">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center text-white">
+                <h1>Frequently Asked Questions</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home:home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'about:about' %}" class="text-white">About</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">FAQ</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Intro Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <h2 class="mb-4">Answers to Common Questions</h2>
+                <p class="lead mb-5">We've compiled answers to questions we frequently receive from our clients. If you don't find what you're looking for, please <a href="{% url 'contact:contact' %}">contact us</a> directly.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Categories Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto" data-aos="fade-up">
+                <ul class="nav nav-pills mb-5 justify-content-center" id="faqTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="general-tab" data-bs-toggle="pill" data-bs-target="#general" type="button" role="tab" aria-controls="general" aria-selected="true">General</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="services-tab" data-bs-toggle="pill" data-bs-target="#services" type="button" role="tab" aria-controls="services" aria-selected="false">Services</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="process-tab" data-bs-toggle="pill" data-bs-target="#process" type="button" role="tab" aria-controls="process" aria-selected="false">Process</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pricing-tab" data-bs-toggle="pill" data-bs-target="#pricing" type="button" role="tab" aria-controls="pricing" aria-selected="false">Pricing</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="technical-tab" data-bs-toggle="pill" data-bs-target="#technical" type="button" role="tab" aria-controls="technical" aria-selected="false">Technical</button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content" id="faqTabContent">
+                    <!-- General FAQs -->
+                    <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                        <div class="accordion" id="accordionGeneral">
+                            {% if general_faqs %}
+                                {% for faq in general_faqs %}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading-general-{{ forloop.counter }}">
+                                        <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-general-{{ forloop.counter }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="collapse-general-{{ forloop.counter }}">
+                                            {{ faq.question }}
+                                        </button>
+                                    </h2>
+                                    <div id="collapse-general-{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading-general-{{ forloop.counter }}" data-bs-parent="#accordionGeneral">
+                                        <div class="accordion-body">
+                                            {{ faq.answer|safe }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <!-- Default General FAQs -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading-general-1">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-general-1" aria-expanded="true" aria-controls="collapse-general-1">
+                                            What is QBITX Solutions?
+                                        </button>
+                                    </h2>
+                                    <div id="collapse-general-1" class="accordion-collapse collapse show" aria-labelledby="heading-general-1" data-bs-parent="#accordionGeneral">
+                                        <div class="accordion-body">
+                                            <p>QBITX Solutions is a full-service software development company that specializes in custom web development, mobile app development, e-commerce solutions, ERP systems, and digital marketing services. We help businesses of all sizes transform their operations through innovative digital solutions.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading-general-2">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-general-2" aria-expanded="false" aria-controls="collapse-general-2">
+                                            What types of businesses do you work with?
+                                        </button>
+                                    </h2>
+                                    <div id="collapse-general-2" class="accordion-collapse collapse" aria-labelledby="heading-general-2" data-bs-parent="#accordionGeneral">
+                                        <div class="accordion-body">
+                                            <p>We work with businesses of all sizes, from startups to large enterprises, across various industries including retail, healthcare, finance, education, and more. Our solutions are tailored to meet the specific needs of each client, regardless of their size or sector.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading-general-3">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-general-3" aria-expanded="false" aria-controls="collapse-general-3">
+                                            How long has QBITX Solutions been in business?
+                                        </button>
+                                    </h2>
+                                    <div id="collapse-general-3" class="accordion-collapse collapse" aria-labelledby="heading-general-3" data-bs-parent="#accordionGeneral">
+                                        <div class="accordion-body">
+                                            <p>QBITX Solutions was founded in 2013 and has been delivering high-quality digital solutions for over 10 years. During this time, we've successfully completed hundreds of projects for clients worldwide and built a team of 50+ professionals with expertise across various technologies and industries.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Services FAQs -->
+                    <div class="tab-pane fade" id="services" role="tabpanel" aria-labelledby="services-tab">
+                        <div class="accordion" id="accordionServices">
+                            {% if services_faqs %}
+                                {% for faq in services_faqs %}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading-services-{{ forloop.counter }}">
+                                        <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-services-{{ forloop.counter }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="collapse-services-{{ forloop.counter }}">
+                                            {{ faq.question }}
+                                        </button>
+                                    </h2>
+                                    <div id="collapse-services-{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading-services-{{ forloop.counter }}" data-bs-parent="#accordionServices">
+                                        <div class="accordion-body">
+                                            {{ faq.answer|safe }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <!-- Default Services FAQs -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading-services-1">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-services-1" aria-expanded="true" aria-controls="collapse-services-1">
+                                            What services do you offer?
+                                        </button>
+                                    </h2>
+                                    <div id="collapse-services-1" class="accordion-collapse collapse show" aria-labelledby="heading-services-1" data-bs-parent="#accordionServices">
+                                        <div class="accordion-body">
+                                            <p>We offer a comprehensive range of digital services including:</p>
+                                            <ul>
+                                                <li>Custom Web Development</li>
+                                                <li>Mobile App Development (iOS & Android)</li>
+                                                <li>E-Commerce Solutions</li>
+                                                <li>ERP & Business Management Systems</li>
+                                                <li>Digital Marketing & SEO</li>
+                                                <li>UI/UX Design</li>
+                                                <li>Cloud Solutions</li>
+                                                <li>IT Consulting</li>
+                                            </ul>
+                                            <p>Each service is tailored to meet the specific needs and goals of our clients.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading-services-2">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-services-2" aria-expanded="false" aria-controls="collapse-services-2">
+                                            Do you provide ongoing maintenance and support?
+                                        </button>
+                                    </h2>
+                                    <div id="collapse-services-2" class="accordion-collapse collapse" aria-labelledby="heading-services-2" data-bs-parent="#accordionServices">
+                                        <div class="accordion-body">
+                                            <p>Yes, we offer ongoing support and maintenance services to ensure your digital solutions continue to perform optimally. We provide different support packages that include regular updates, security patches, performance optimization, and technical assistance. Our team is available to address any issues that may arise after your project launches.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading-services-3">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-services-3" aria-expanded="false" aria-controls="collapse-services-3">
+                                            Can you help with both the design and development of my project?
+                                        </button>
+                                    </h2>
+                                    <div id="collapse-services-3" class="accordion-collapse collapse" aria-labelledby="heading-services-3" data-bs-parent="#accordionServices">
+                                        <div class="accordion-body">
+                                            <p>Absolutely! We offer end-to-end solutions that include both design and development services. Our team of designers will create an attractive and user-friendly interface for your project, while our developers will ensure the technical implementation is robust and scalable. This integrated approach ensures a cohesive final product that not only looks great but also functions flawlessly.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Process FAQs -->
+                    <div class="tab-pane fade" id="process" role="tabpanel" aria-labelledby="process-tab">
+                        <div class="accordion" id="accordionProcess">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-process-1">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-process-1" aria-expanded="true" aria-controls="collapse-process-1">
+                                        What is your development process?
+                                    </button>
+                                </h2>
+                                <div id="collapse-process-1" class="accordion-collapse collapse show" aria-labelledby="heading-process-1" data-bs-parent="#accordionProcess">
+                                    <div class="accordion-body">
+                                        <p>We follow an agile development methodology that includes:</p>
+                                        <ol>
+                                            <li><strong>Discovery and Planning:</strong> Understanding your business goals, target audience, and project requirements.</li>
+                                            <li><strong>Design and Prototyping:</strong> Creating wireframes, mockups, and interactive prototypes.</li>
+                                            <li><strong>Development:</strong> Building the solution with regular sprint cycles and client feedback.</li>
+                                            <li><strong>Testing and Quality Assurance:</strong> Rigorous testing to ensure functionality, performance, and security.</li>
+                                            <li><strong>Deployment:</strong> Launching your solution to production environments.</li>
+                                            <li><strong>Ongoing Support:</strong> Providing maintenance and enhancements as needed.</li>
+                                        </ol>
+                                        <p>Throughout this process, we maintain regular communication with our clients and provide frequent updates on progress.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-process-2">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-process-2" aria-expanded="false" aria-controls="collapse-process-2">
+                                        How long does it take to complete a project?
+                                    </button>
+                                </h2>
+                                <div id="collapse-process-2" class="accordion-collapse collapse" aria-labelledby="heading-process-2" data-bs-parent="#accordionProcess">
+                                    <div class="accordion-body">
+                                        <p>Project timelines vary depending on the scope, complexity, and specific requirements. As a general guideline:</p>
+                                        <ul>
+                                            <li>Simple websites: 4-6 weeks</li>
+                                            <li>E-commerce platforms: 8-12 weeks</li>
+                                            <li>Custom web applications: 12-16 weeks</li>
+                                            <li>Mobile applications: 12-20 weeks</li>
+                                            <li>Enterprise systems: 16-24 weeks or more</li>
+                                        </ul>
+                                        <p>During our initial consultation, we'll provide a more accurate timeline based on your specific project requirements.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-process-3">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-process-3" aria-expanded="false" aria-controls="collapse-process-3">
+                                        How involved will I be in the development process?
+                                    </button>
+                                </h2>
+                                <div id="collapse-process-3" class="accordion-collapse collapse" aria-labelledby="heading-process-3" data-bs-parent="#accordionProcess">
+                                    <div class="accordion-body">
+                                        <p>We believe in collaborative development and value client input throughout the process. Your involvement typically includes:</p>
+                                        <ul>
+                                            <li>Initial consultation to define requirements and goals</li>
+                                            <li>Regular progress updates and sprint reviews</li>
+                                            <li>Feedback on design mockups and prototypes</li>
+                                            <li>Testing and review of delivered features</li>
+                                            <li>Final approval before launch</li>
+                                        </ul>
+                                        <p>We can adjust the level of involvement based on your preferences and availability, ensuring the process works for you while still maintaining project quality and momentum.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pricing FAQs -->
+                    <div class="tab-pane fade" id="pricing" role="tabpanel" aria-labelledby="pricing-tab">
+                        <div class="accordion" id="accordionPricing">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-pricing-1">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-pricing-1" aria-expanded="true" aria-controls="collapse-pricing-1">
+                                        How much does a typical project cost?
+                                    </button>
+                                </h2>
+                                <div id="collapse-pricing-1" class="accordion-collapse collapse show" aria-labelledby="heading-pricing-1" data-bs-parent="#accordionPricing">
+                                    <div class="accordion-body">
+                                        <p>Project costs vary widely based on requirements, complexity, and scope. We provide detailed quotes after understanding your specific needs during an initial consultation. As a general guideline:</p>
+                                        <ul>
+                                            <li>Basic websites: $5,000 - $15,000</li>
+                                            <li>E-commerce platforms: $15,000 - $50,000</li>
+                                            <li>Custom web applications: $25,000 - $75,000+</li>
+                                            <li>Mobile applications: $25,000 - $100,000+</li>
+                                            <li>Enterprise systems: $50,000 - $250,000+</li>
+                                        </ul>
+                                        <p>We offer flexible pricing models including fixed-price projects, hourly rates, and retainer agreements to accommodate different budgets and project types.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-pricing-2">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-pricing-2" aria-expanded="false" aria-controls="collapse-pricing-2">
+                                        Do you offer payment plans?
+                                    </button>
+                                </h2>
+                                <div id="collapse-pricing-2" class="accordion-collapse collapse" aria-labelledby="heading-pricing-2" data-bs-parent="#accordionPricing">
+                                    <div class="accordion-body">
+                                        <p>Yes, we understand that budget management is important for businesses. We typically structure payments in phases tied to project milestones rather than requiring the full amount upfront. A common payment schedule includes:</p>
+                                        <ul>
+                                            <li>Initial deposit: 30-40% to commence work</li>
+                                            <li>Milestone payments: 2-3 installments based on agreed project phases</li>
+                                            <li>Final payment: Upon project completion and client approval</li>
+                                        </ul>
+                                        <p>We can customize payment plans based on your specific project and budget requirements.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-pricing-3">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-pricing-3" aria-expanded="false" aria-controls="collapse-pricing-3">
+                                        How much does ongoing maintenance and support cost?
+                                    </button>
+                                </h2>
+                                <div id="collapse-pricing-3" class="accordion-collapse collapse" aria-labelledby="heading-pricing-3" data-bs-parent="#accordionPricing">
+                                    <div class="accordion-body">
+                                        <p>We offer several maintenance and support packages to meet different needs:</p>
+                                        <ul>
+                                            <li><strong>Basic Support:</strong> $500-1,000/month - Includes hosting management, security updates, and minor bug fixes</li>
+                                            <li><strong>Standard Support:</strong> $1,000-2,500/month - Includes basic support plus regular performance optimization, content updates, and priority response times</li>
+                                            <li><strong>Premium Support:</strong> $2,500+/month - Includes all standard features plus ongoing enhancements, dedicated support team, and guaranteed response times</li>
+                                        </ul>
+                                        <p>We can also create custom support packages tailored to your specific needs and budget.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Technical FAQs -->
+                    <div class="tab-pane fade" id="technical" role="tabpanel" aria-labelledby="technical-tab">
+                        <div class="accordion" id="accordionTechnical">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-technical-1">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-technical-1" aria-expanded="true" aria-controls="collapse-technical-1">
+                                        What technologies do you use for development?
+                                    </button>
+                                </h2>
+                                <div id="collapse-technical-1" class="accordion-collapse collapse show" aria-labelledby="heading-technical-1" data-bs-parent="#accordionTechnical">
+                                    <div class="accordion-body">
+                                        <p>We work with a wide range of technologies to ensure we can choose the best tools for each project:</p>
+                                        <ul>
+                                            <li><strong>Frontend:</strong> React, Angular, Vue.js, Next.js, HTML5, CSS3, JavaScript/TypeScript</li>
+                                            <li><strong>Backend:</strong> Node.js, Python (Django, Flask), PHP (Laravel), Java, .NET, Ruby on Rails</li>
+                                            <li><strong>Mobile:</strong> React Native, Flutter, Swift (iOS), Kotlin (Android)</li>
+                                            <li><strong>Databases:</strong> MySQL, PostgreSQL, MongoDB, Firebase, Redis</li>
+                                            <li><strong>DevOps:</strong> Docker, Kubernetes, AWS, Google Cloud, Azure, CI/CD</li>
+                                            <li><strong>CMS:</strong> WordPress, Drupal, Shopify, Magento</li>
+                                        </ul>
+                                        <p>We select technologies based on project requirements, long-term maintainability, and performance considerations.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-technical-2">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-technical-2" aria-expanded="false" aria-controls="collapse-technical-2">
+                                        How do you ensure the security of your applications?
+                                    </button>
+                                </h2>
+                                <div id="collapse-technical-2" class="accordion-collapse collapse" aria-labelledby="heading-technical-2" data-bs-parent="#accordionTechnical">
+                                    <div class="accordion-body">
+                                        <p>Security is a top priority in all our development projects. We implement multiple security measures including:</p>
+                                        <ul>
+                                            <li>Secure coding practices and regular code reviews</li>
+                                            <li>Data encryption in transit and at rest</li>
+                                            <li>Authentication and authorization controls</li>
+                                            <li>Protection against common vulnerabilities (OWASP Top 10)</li>
+                                            <li>Regular security testing and vulnerability scanning</li>
+                                            <li>Secure deployment practices and infrastructure</li>
+                                            <li>Compliance with relevant regulations (GDPR, CCPA, etc.)</li>
+                                        </ul>
+                                        <p>We also provide security training for our team and stay updated on the latest security threats and mitigation techniques.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-technical-3">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-technical-3" aria-expanded="false" aria-controls="collapse-technical-3">
+                                        Do you provide source code and documentation?
+                                    </button>
+                                </h2>
+                                <div id="collapse-technical-3" class="accordion-collapse collapse" aria-labelledby="heading-technical-3" data-bs-parent="#accordionTechnical">
+                                    <div class="accordion-body">
+                                        <p>Yes, we provide full ownership of the source code to our clients upon project completion and final payment. This includes:</p>
+                                        <ul>
+                                            <li>All source code files in a version control repository (e.g., GitHub)</li>
+                                            <li>Comprehensive technical documentation</li>
+                                            <li>Setup and deployment instructions</li>
+                                            <li>API documentation (if applicable)</li>
+                                            <li>Database schemas and diagrams</li>
+                                            <li>User manuals and guides (if part of the project scope)</li>
+                                        </ul>
+                                        <p>We believe in complete transparency and want to ensure you have everything needed to maintain and further develop your solution if desired.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <h2 class="mb-4">Still Have Questions?</h2>
+                <p class="lead mb-4">We're here to help! Contact us directly and our team will get back to you as soon as possible.</p>
+                <div>
+                    <a href="{% url 'contact:contact' %}" class="btn btn-primary btn-lg me-3">Contact Us</a>
+                    <a href="tel:+11234567890" class="btn btn-outline-primary btn-lg"><i class="fas fa-phone-alt me-2"></i>Call Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

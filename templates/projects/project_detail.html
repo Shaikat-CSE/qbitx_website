@@ -1,0 +1,460 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title|default:"Project Details" }}{% endblock %}
+{% block meta_description %}{{ project.meta_description|default:project.short_description }}{% endblock %}
+{% block meta_keywords %}{{ project.meta_keywords|default:"project, case study, software development" }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-primary">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center text-white">
+                <h1>{{ project.title|default:"Project Details" }}</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home:home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'projects:project_list' %}" class="text-white">Projects</a></li>
+                        {% if project.category %}
+                        <li class="breadcrumb-item"><a href="{% url 'projects:project_list_by_category' project.category.slug %}" class="text-white">{{ project.category.name }}</a></li>
+                        {% endif %}
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ project.title|default:"Project" }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Detail Section -->
+<section class="py-5">
+    <div class="container">
+        {% if project %}
+        <div class="row">
+            <!-- Project Images -->
+            <div class="col-12 mb-5" data-aos="fade-up">
+                <div class="project-banner mb-4">
+                    <img src="{{ project.banner.url|default:project.thumbnail.url }}" alt="{{ project.title }}" class="img-fluid rounded">
+                </div>
+                {% if project.gallery.all %}
+                <div class="row project-gallery">
+                    {% for image in project.gallery.all %}
+                    <div class="col-md-4 col-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                        <a href="{{ image.image.url }}" class="gallery-item">
+                            <img src="{{ image.image.url }}" alt="{{ image.title|default:project.title }}" class="img-fluid rounded">
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Project Info -->
+            <div class="col-lg-8" data-aos="fade-up">
+                <div class="project-detail-content">
+                    <h2 class="mb-4">{{ project.title }}</h2>
+                    <div class="project-meta mb-4">
+                        <span class="badge bg-primary py-2 px-3 me-2 mb-2">{{ project.category.name }}</span>
+                        <span class="text-muted">Client: {{ project.client }}</span>
+                        <span class="text-muted mx-3">|</span>
+                        <span class="text-muted">Year: {{ project.completion_date|date:"Y" }}</span>
+                    </div>
+                    <div class="project-description mb-5">
+                        {{ project.description|safe }}
+                    </div>
+                    
+                    {% if project.challenge %}
+                    <h3 class="mb-3">The Challenge</h3>
+                    <div class="mb-4">
+                        {{ project.challenge|safe }}
+                    </div>
+                    {% endif %}
+                    
+                    {% if project.solution %}
+                    <h3 class="mb-3">Our Solution</h3>
+                    <div class="mb-4">
+                        {{ project.solution|safe }}
+                    </div>
+                    {% endif %}
+                    
+                    {% if project.results %}
+                    <h3 class="mb-3">Results</h3>
+                    <div class="mb-5">
+                        {{ project.results|safe }}
+                    </div>
+                    {% endif %}
+                    
+                    {% if project.technologies.all %}
+                    <h3 class="mb-3">Technologies Used</h3>
+                    <div class="technologies-list mb-5">
+                        {% for tech in project.technologies.all %}
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            {% if tech.icon %}<i class="{{ tech.icon }} me-1"></i>{% endif %}
+                            {{ tech.name }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if project.testimonial %}
+                    <div class="project-testimonial p-4 bg-light rounded mb-5">
+                        <div class="testimonial-content">
+                            <p class="testimonial-text fst-italic mb-3">"{{ project.testimonial.content }}"</p>
+                            <div class="client-info">
+                                {% if project.testimonial.client_image %}
+                                <div class="client-img me-3">
+                                    <img src="{{ project.testimonial.client_image.url }}" alt="{{ project.testimonial.client_name }}">
+                                </div>
+                                {% endif %}
+                                <div class="client-details">
+                                    <h5 class="mb-0">{{ project.testimonial.client_name }}</h5>
+                                    <p class="text-muted mb-0">{{ project.testimonial.client_position }}, {{ project.testimonial.client_company }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <!-- Project Details -->
+                <div class="sidebar-widget bg-white p-4 rounded mb-4 shadow-sm">
+                    <h3 class="mb-4">Project Details</h3>
+                    <ul class="list-unstyled project-details">
+                        <li class="mb-3 d-flex">
+                            <span class="fw-bold me-2 text-dark">Client:</span>
+                            <span>{{ project.client }}</span>
+                        </li>
+                        <li class="mb-3 d-flex">
+                            <span class="fw-bold me-2 text-dark">Category:</span>
+                            <span>{{ project.category.name }}</span>
+                        </li>
+                        <li class="mb-3 d-flex">
+                            <span class="fw-bold me-2 text-dark">Completion Date:</span>
+                            <span>{{ project.completion_date|date:"F Y" }}</span>
+                        </li>
+                        {% if project.project_url %}
+                        <li class="mb-3">
+                            <span class="fw-bold me-2 text-dark">Project URL:</span>
+                            <a href="{{ project.project_url }}" target="_blank" class="text-primary">Visit Website <i class="fas fa-external-link-alt ms-1"></i></a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                
+                <!-- Share Project -->
+                <div class="sidebar-widget bg-white p-4 rounded mb-4 shadow-sm">
+                    <h3 class="mb-4">Share Project</h3>
+                    <div class="social-share">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="btn btn-outline-primary me-2 mb-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ project.title }}" target="_blank" class="btn btn-outline-primary me-2 mb-2"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ project.title }}" target="_blank" class="btn btn-outline-primary me-2 mb-2"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:?subject={{ project.title }}&body=Check out this project: {{ request.build_absolute_uri }}" class="btn btn-outline-primary me-2 mb-2"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Call to Action -->
+                <div class="sidebar-widget bg-primary p-4 rounded text-white">
+                    <h3 class="mb-3">Have a Similar Project?</h3>
+                    <p>Let's discuss how we can help you achieve your business goals with our expertise.</p>
+                    <a href="{% url 'contact:service_request' %}" class="btn btn-light">Get a Quote</a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <!-- Default project details if none exists in the database -->
+        <div class="row">
+            <div class="col-12 mb-5" data-aos="fade-up">
+                <div class="project-banner mb-4">
+                    <img src="{% static 'images/projects/project-detail-banner.jpg' %}" alt="E-Commerce Platform" class="img-fluid rounded">
+                </div>
+                <div class="row project-gallery">
+                    <div class="col-md-4 col-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                        <a href="{% static 'images/projects/gallery1.jpg' %}" class="gallery-item">
+                            <img src="{% static 'images/projects/gallery1.jpg' %}" alt="Project Image 1" class="img-fluid rounded">
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                        <a href="{% static 'images/projects/gallery2.jpg' %}" class="gallery-item">
+                            <img src="{% static 'images/projects/gallery2.jpg' %}" alt="Project Image 2" class="img-fluid rounded">
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                        <a href="{% static 'images/projects/gallery3.jpg' %}" class="gallery-item">
+                            <img src="{% static 'images/projects/gallery3.jpg' %}" alt="Project Image 3" class="img-fluid rounded">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-8" data-aos="fade-up">
+                <div class="project-detail-content">
+                    <h2 class="mb-4">E-Commerce Platform for Retail Business</h2>
+                    <div class="project-meta mb-4">
+                        <span class="badge bg-primary py-2 px-3 me-2 mb-2">E-Commerce</span>
+                        <span class="text-muted">Client: Retail Solutions Inc.</span>
+                        <span class="text-muted mx-3">|</span>
+                        <span class="text-muted">Year: 2023</span>
+                    </div>
+                    <div class="project-description mb-5">
+                        <p>QBITX Solutions developed a comprehensive e-commerce platform for Retail Solutions Inc., a growing retailer with multiple product lines and a need to expand their online presence.</p>
+                        <p>Our team created a custom solution that seamlessly integrated with their existing inventory management system while providing a modern, user-friendly shopping experience for their customers.</p>
+                    </div>
+                    
+                    <h3 class="mb-3">The Challenge</h3>
+                    <div class="mb-4">
+                        <p>Retail Solutions Inc. faced several challenges with their online presence:</p>
+                        <ul>
+                            <li>Their existing website was outdated and not mobile-responsive</li>
+                            <li>They had no integration between their online store and physical inventory</li>
+                            <li>The checkout process was complicated, leading to high cart abandonment rates</li>
+                            <li>They needed a scalable solution to support their growing product lines</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 class="mb-3">Our Solution</h3>
+                    <div class="mb-4">
+                        <p>We developed a custom e-commerce platform with the following features:</p>
+                        <ul>
+                            <li>Modern, responsive design with intuitive navigation</li>
+                            <li>Seamless integration with their inventory management system</li>
+                            <li>Streamlined checkout process with multiple payment options</li>
+                            <li>Personalized product recommendations based on browsing history</li>
+                            <li>Comprehensive analytics dashboard for tracking sales and customer behavior</li>
+                            <li>Advanced search functionality with filters and sorting options</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 class="mb-3">Results</h3>
+                    <div class="mb-5">
+                        <p>The new e-commerce platform delivered significant results for Retail Solutions Inc.:</p>
+                        <ul>
+                            <li>48% increase in online sales within the first three months</li>
+                            <li>32% reduction in cart abandonment rate</li>
+                            <li>62% increase in mobile conversions</li>
+                            <li>Improved inventory management with real-time updates</li>
+                            <li>Enhanced customer satisfaction with easier navigation and checkout</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 class="mb-3">Technologies Used</h3>
+                    <div class="technologies-list mb-5">
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fab fa-react me-1"></i>
+                            React
+                        </span>
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fab fa-node-js me-1"></i>
+                            Node.js
+                        </span>
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fas fa-database me-1"></i>
+                            MongoDB
+                        </span>
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fab fa-stripe me-1"></i>
+                            Stripe
+                        </span>
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fas fa-shopping-cart me-1"></i>
+                            Shopify API
+                        </span>
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fas fa-cloud me-1"></i>
+                            AWS
+                        </span>
+                    </div>
+                    
+                    <div class="project-testimonial p-4 bg-light rounded mb-5">
+                        <div class="testimonial-content">
+                            <p class="testimonial-text fst-italic mb-3">"QBITX Solutions delivered an exceptional e-commerce platform that has significantly improved our online sales. Their team was professional, responsive, and truly understood our business needs. The seamless integration with our inventory system has made managing our online store so much easier."</p>
+                            <div class="client-info">
+                                <div class="client-details">
+                                    <h5 class="mb-0">John Smith</h5>
+                                    <p class="text-muted mb-0">CEO, Retail Solutions Inc.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="sidebar-widget bg-white p-4 rounded mb-4 shadow-sm">
+                    <h3 class="mb-4">Project Details</h3>
+                    <ul class="list-unstyled project-details">
+                        <li class="mb-3 d-flex">
+                            <span class="fw-bold me-2 text-dark">Client:</span>
+                            <span>Retail Solutions Inc.</span>
+                        </li>
+                        <li class="mb-3 d-flex">
+                            <span class="fw-bold me-2 text-dark">Category:</span>
+                            <span>E-Commerce</span>
+                        </li>
+                        <li class="mb-3 d-flex">
+                            <span class="fw-bold me-2 text-dark">Completion Date:</span>
+                            <span>June 2023</span>
+                        </li>
+                        <li class="mb-3">
+                            <span class="fw-bold me-2 text-dark">Project URL:</span>
+                            <a href="#" target="_blank" class="text-primary">Visit Website <i class="fas fa-external-link-alt ms-1"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-widget bg-white p-4 rounded mb-4 shadow-sm">
+                    <h3 class="mb-4">Share Project</h3>
+                    <div class="social-share">
+                        <a href="#" target="_blank" class="btn btn-outline-primary me-2 mb-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank" class="btn btn-outline-primary me-2 mb-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank" class="btn btn-outline-primary me-2 mb-2"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="btn btn-outline-primary me-2 mb-2"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                
+                <div class="sidebar-widget bg-primary p-4 rounded text-white">
+                    <h3 class="mb-3">Have a Similar Project?</h3>
+                    <p>Let's discuss how we can help you achieve your business goals with our expertise.</p>
+                    <a href="{% url 'contact:service_request' %}" class="btn btn-light">Get a Quote</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Related Projects Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Related Projects</h2>
+            <p>Explore more of our work in {{ project.category.name|default:"various categories" }}.</p>
+        </div>
+        
+        <div class="row">
+            {% if related_projects %}
+                {% for related in related_projects %}
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{{ related.thumbnail.url }}" alt="{{ related.title }}">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>{{ related.title }}</h3>
+                                    <p>{{ related.short_description|truncatechars:60 }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">{{ related.category.name }}</span>
+                        <a href="{% url 'projects:project_detail' related.slug %}" class="stretched-link"></a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default related projects -->
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{% static 'images/projects/project2.jpg' %}" alt="Mobile App">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>Mobile Banking App</h3>
+                                    <p>Secure and user-friendly mobile banking application.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">Mobile App</span>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{% static 'images/projects/project4.jpg' %}" alt="Corporate Website">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>Corporate Website</h3>
+                                    <p>Modern and responsive website for a financial services company.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">Web Development</span>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{% static 'images/projects/project6.jpg' %}" alt="Booking System">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>Restaurant Booking System</h3>
+                                    <p>Online reservation system for a chain of restaurants.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">Web Application</span>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <h2 class="mb-4">Ready to Start Your Own Project?</h2>
+                <p class="lead mb-4">Contact us today to discuss how we can help you achieve your business goals with our expert digital solutions.</p>
+                <div>
+                    <a href="{% url 'contact:service_request' %}" class="btn btn-primary btn-lg">Start a Project</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% block extra_css %}
+<style>
+    .project-banner img {
+        width: 100%;
+        height: auto;
+        max-height: 600px;
+        object-fit: cover;
+    }
+    
+    .project-gallery img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: var(--transition);
+    }
+    
+    .project-gallery img:hover {
+        transform: scale(1.03);
+    }
+    
+    .project-meta .badge {
+        font-weight: 500;
+    }
+    
+    .project-details li {
+        margin-bottom: 0.75rem;
+    }
+    
+    .social-share a {
+        width: 40px;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+{% endblock %}
+{% endblock %} 

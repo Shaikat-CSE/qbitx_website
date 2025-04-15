@@ -1,0 +1,248 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us{% endblock %}
+{% block meta_description %}Get in touch with QBITX Solutions for all your software development, web application, mobile app, and digital marketing needs.{% endblock %}
+{% block meta_keywords %}contact, get in touch, software development company, request quote, QBITX Solutions contact{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-primary">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center text-white">
+                <h1>Contact Us</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home:home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Contact</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Info Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5" data-aos="fade-up">
+                <h2 class="mb-4">Get In Touch With Us</h2>
+                <p class="lead">Have questions about our services or want to discuss your project? We're here to help. Contact us using the information below or fill out the form to start a conversation.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="100">
+                <div class="contact-info-box h-100">
+                    <div class="contact-icon mb-4">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h4>Our Location</h4>
+                    {% if company_info %}
+                    <p>{{ company_info.address|linebreaksbr }}</p>
+                    {% else %}
+                    <p>123 Tech Street<br>Innovation City<br>State, Country 12345</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="200">
+                <div class="contact-info-box h-100">
+                    <div class="contact-icon mb-4">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h4>Email Us</h4>
+                    {% if company_info %}
+                    <p><a href="mailto:{{ company_info.email }}">{{ company_info.email }}</a></p>
+                    {% else %}
+                    <p><a href="mailto:info@qbitxsolutions.com">info@qbitxsolutions.com</a></p>
+                    {% endif %}
+                    <p><a href="mailto:support@qbitxsolutions.com">support@qbitxsolutions.com</a></p>
+                </div>
+            </div>
+            
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="contact-info-box h-100">
+                    <div class="contact-icon mb-4">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h4>Call Us</h4>
+                    {% if company_info %}
+                    <p><a href="tel:{{ company_info.phone }}">{{ company_info.phone }}</a></p>
+                    {% else %}
+                    <p><a href="tel:+11234567890">+1 (123) 456-7890</a></p>
+                    {% endif %}
+                    <p>Mon - Fri: 9:00 AM - 6:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8" data-aos="fade-up">
+                <div class="contact-form-container bg-white p-5 rounded shadow-sm">
+                    <h3 class="mb-4 text-center">Send Us a Message</h3>
+                    
+                    {% if messages %}
+                    <div class="messages mb-4">
+                        {% for message in messages %}
+                        <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <form action="{% url 'contact:contact' %}" method="post" class="contact-form">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Your Name <span class="text-danger">*</span></label>
+                                <input type="text" name="name" id="name" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Your Email <span class="text-danger">*</span></label>
+                                <input type="email" name="email" id="email" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" name="phone" id="phone" class="form-control">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="subject" class="form-label">Subject <span class="text-danger">*</span></label>
+                                <input type="text" name="subject" id="subject" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Your Message <span class="text-danger">*</span></label>
+                            <textarea name="message" id="message" class="form-control" rows="6" required></textarea>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" name="privacy_policy" id="privacy_policy" class="form-check-input" required>
+                            <label for="privacy_policy" class="form-check-label">I agree to the <a href="#">Privacy Policy</a> <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12" data-aos="fade-up">
+                <div class="map-container">
+                    <!-- Replace with your Google Maps embed code -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9914406081493!2d-122.08428937731212!3d37.42199997196679!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fba02425dad8f%3A0x96ec5bc108a70872!2sGooglePlex!5e0!3m2!1sen!2sus!4v1634829296169!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5" data-aos="fade-up">
+                <h2 class="mb-4">Frequently Asked Questions</h2>
+                <p class="lead">Find answers to common questions about our services and processes.</p>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-10" data-aos="fade-up">
+                <div class="accordion" id="contactFAQ">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                What types of businesses do you work with?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#contactFAQ">
+                            <div class="accordion-body">
+                                We work with businesses of all sizes, from startups to large enterprises, across various industries including retail, healthcare, finance, education, and more. Our solutions are tailored to meet the specific needs of each client, regardless of their size or sector.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                How long does it take to complete a project?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#contactFAQ">
+                            <div class="accordion-body">
+                                Project timelines vary depending on the scope, complexity, and specific requirements. A simple website might take 4-6 weeks, while a complex web application or mobile app could take 3-6 months or more. During our initial consultation, we'll provide a more accurate timeline based on your project specifications.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                What is your development process?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#contactFAQ">
+                            <div class="accordion-body">
+                                We follow an agile development methodology that includes: 1) Discovery and planning, 2) Design and prototyping, 3) Development, 4) Testing and quality assurance, 5) Deployment, and 6) Ongoing support and maintenance. Throughout this process, we maintain regular communication with our clients and provide frequent updates on progress.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                How much does a typical project cost?
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#contactFAQ">
+                            <div class="accordion-body">
+                                Project costs vary widely based on requirements, complexity, and scope. We provide detailed quotes after understanding your specific needs during an initial consultation. We offer flexible pricing models including fixed-price projects, hourly rates, and retainer agreements to accommodate different budgets and project types.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                Do you provide ongoing support after project completion?
+                            </button>
+                        </h2>
+                        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#contactFAQ">
+                            <div class="accordion-body">
+                                Yes, we offer ongoing support and maintenance services to ensure your digital solutions continue to perform optimally. We provide different support packages that include regular updates, security patches, performance optimization, and technical assistance. Our team is available to address any issues that may arise after your project launches.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <h2 class="mb-4">Need a Custom Quote for Your Project?</h2>
+                <p class="lead mb-4">For detailed project discussions and custom quotes, please use our service request form.</p>
+                <a href="{% url 'contact:service_request' %}" class="btn btn-primary btn-lg">Request a Quote</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

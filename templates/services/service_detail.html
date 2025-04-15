@@ -1,0 +1,553 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block title %}{{ service.name }}{% endblock %}
+{% block meta_description %}{{ service.meta_description|default:service.short_description }}{% endblock %}
+{% block meta_keywords %}{{ service.meta_keywords|default:"software development, web development, digital solutions" }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-primary">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center text-white">
+                <h1>{{ service.name|default:"Service Details" }}</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home:home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'services:service_list' %}" class="text-white">Services</a></li>
+                        {% if service.category %}
+                        <li class="breadcrumb-item"><a href="{% url 'services:service_list_by_category' service.category.slug %}" class="text-white">{{ service.category.name }}</a></li>
+                        {% endif %}
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ service.name|default:"Service" }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Service Detail Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Service Content -->
+            <div class="col-lg-8" data-aos="fade-up">
+                {% if service %}
+                <div class="service-detail-img mb-4">
+                    <img src="{{ service.image.url }}" alt="{{ service.name }}" class="img-fluid rounded">
+                </div>
+                <div class="service-detail-content">
+                    <h2 class="mb-4">{{ service.name }}</h2>
+                    <div class="mb-4">{{ service.description|safe }}</div>
+                    
+                    {% if service.features.all %}
+                    <h3 class="mb-3 mt-5">Key Features</h3>
+                    <div class="row">
+                        {% for feature in service.features.all %}
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-start">
+                                <div class="feature-icon-small me-3">
+                                    <i class="{{ feature.icon|default:'fas fa-check-circle' }} text-primary"></i>
+                                </div>
+                                <div>
+                                    <h5>{{ feature.title }}</h5>
+                                    <p>{{ feature.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if service.process_steps.all %}
+                    <h3 class="mb-4 mt-5">Our Process</h3>
+                    <div class="process-timeline">
+                        {% for step in service.process_steps.all %}
+                        <div class="process-item" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                            <div class="process-number">{{ forloop.counter }}</div>
+                            <div class="process-content">
+                                <h4>{{ step.title }}</h4>
+                                <p>{{ step.description }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if service.technologies.all %}
+                    <h3 class="mb-4 mt-5">Technologies We Use</h3>
+                    <div class="technologies-list mb-5">
+                        {% for tech in service.technologies.all %}
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            {% if tech.icon %}<i class="{{ tech.icon }} me-1"></i>{% endif %}
+                            {{ tech.name }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% else %}
+                <!-- Default service detail if none exists in the database -->
+                <div class="service-detail-img mb-4">
+                    <img src="{% static 'images/services/service-detail.jpg' %}" alt="Web Development" class="img-fluid rounded">
+                </div>
+                <div class="service-detail-content">
+                    <h2 class="mb-4">Web Development</h2>
+                    <div class="mb-4">
+                        <p>At QBITX Solutions, we provide comprehensive web development services tailored to meet your specific business needs. Our expert team creates custom websites and web applications that enhance your online presence and drive business growth.</p>
+                        
+                        <p>We combine cutting-edge technology with creative design to deliver high-performance, user-friendly websites that provide exceptional user experiences. Whether you need a simple informational website, a complex e-commerce platform, or a custom web application, we have the expertise to bring your vision to life.</p>
+                        
+                        <p>Our web development process follows industry best practices, ensuring that your website is not only visually appealing but also secure, scalable, and optimized for search engines. We focus on creating responsive designs that work seamlessly across all devices, providing your users with a consistent experience regardless of how they access your site.</p>
+                    </div>
+                    
+                    <h3 class="mb-3 mt-5">Key Features</h3>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-start">
+                                <div class="feature-icon-small me-3">
+                                    <i class="fas fa-check-circle text-primary"></i>
+                                </div>
+                                <div>
+                                    <h5>Responsive Design</h5>
+                                    <p>Websites that adapt perfectly to all screen sizes and devices</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-start">
+                                <div class="feature-icon-small me-3">
+                                    <i class="fas fa-check-circle text-primary"></i>
+                                </div>
+                                <div>
+                                    <h5>User-Friendly Interface</h5>
+                                    <p>Intuitive navigation and design for optimal user experience</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-start">
+                                <div class="feature-icon-small me-3">
+                                    <i class="fas fa-check-circle text-primary"></i>
+                                </div>
+                                <div>
+                                    <h5>SEO Optimization</h5>
+                                    <p>Built-in search engine optimization to improve visibility</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-start">
+                                <div class="feature-icon-small me-3">
+                                    <i class="fas fa-check-circle text-primary"></i>
+                                </div>
+                                <div>
+                                    <h5>Fast Loading Speed</h5>
+                                    <p>Performance-optimized code for quick page loading</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="mb-4 mt-5">Our Process</h3>
+                    <div class="process-timeline">
+                        <div class="process-item" data-aos="fade-up" data-aos-delay="100">
+                            <div class="process-number">1</div>
+                            <div class="process-content">
+                                <h4>Discovery & Planning</h4>
+                                <p>We begin by understanding your business goals, target audience, and requirements to create a detailed project plan.</p>
+                            </div>
+                        </div>
+                        <div class="process-item" data-aos="fade-up" data-aos-delay="200">
+                            <div class="process-number">2</div>
+                            <div class="process-content">
+                                <h4>Design & Prototyping</h4>
+                                <p>Our designers create wireframes and visual designs that align with your brand identity and user experience goals.</p>
+                            </div>
+                        </div>
+                        <div class="process-item" data-aos="fade-up" data-aos-delay="300">
+                            <div class="process-number">3</div>
+                            <div class="process-content">
+                                <h4>Development</h4>
+                                <p>Our development team brings the designs to life, coding the frontend and backend components of your website.</p>
+                            </div>
+                        </div>
+                        <div class="process-item" data-aos="fade-up" data-aos-delay="400">
+                            <div class="process-number">4</div>
+                            <div class="process-content">
+                                <h4>Testing & Quality Assurance</h4>
+                                <p>We conduct thorough testing to ensure your website functions flawlessly across all devices and browsers.</p>
+                            </div>
+                        </div>
+                        <div class="process-item" data-aos="fade-up" data-aos-delay="500">
+                            <div class="process-number">5</div>
+                            <div class="process-content">
+                                <h4>Deployment & Launch</h4>
+                                <p>Once approved, we deploy your website to a production environment and help you launch it to the world.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="mb-4 mt-5">Technologies We Use</h3>
+                    <div class="technologies-list mb-5">
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fab fa-html5 me-1"></i>
+                            HTML5
+                        </span>
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fab fa-css3-alt me-1"></i>
+                            CSS3
+                        </span>
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fab fa-js me-1"></i>
+                            JavaScript
+                        </span>
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fab fa-react me-1"></i>
+                            React
+                        </span>
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fab fa-angular me-1"></i>
+                            Angular
+                        </span>
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fab fa-vuejs me-1"></i>
+                            Vue.js
+                        </span>
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fab fa-node-js me-1"></i>
+                            Node.js
+                        </span>
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fab fa-php me-1"></i>
+                            PHP
+                        </span>
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fab fa-python me-1"></i>
+                            Python
+                        </span>
+                        <span class="badge bg-light text-dark p-2 mb-2 me-2 border">
+                            <i class="fas fa-database me-1"></i>
+                            MySQL
+                        </span>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Service Request Form -->
+                <div class="sidebar-widget bg-light p-4 rounded mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="mb-4">Request This Service</h3>
+                    <form action="{% url 'contact:service_request' %}" method="post" class="service-request-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="service" value="{{ service.name|default:'Web Development' }}">
+                        <div class="mb-3">
+                            <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="tel" name="phone" class="form-control" placeholder="Your Phone">
+                        </div>
+                        <div class="mb-3">
+                            <textarea name="message" class="form-control" rows="4" placeholder="Tell us about your project" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Submit Request</button>
+                    </form>
+                </div>
+                
+                <!-- Service Categories -->
+                <div class="sidebar-widget bg-white p-4 rounded mb-4 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="mb-4">Service Categories</h3>
+                    <ul class="list-unstyled sidebar-list">
+                        {% if categories %}
+                            {% for category in categories %}
+                            <li class="mb-2">
+                                <a href="{% url 'services:service_list_by_category' category.slug %}" class="d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-angle-right me-2 text-primary"></i> {{ category.name }}</span>
+                                    <span class="badge bg-primary rounded-pill">{{ category.service_count }}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="mb-2">
+                                <a href="#" class="d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-angle-right me-2 text-primary"></i> Web Development</span>
+                                    <span class="badge bg-primary rounded-pill">6</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-angle-right me-2 text-primary"></i> Mobile Development</span>
+                                    <span class="badge bg-primary rounded-pill">4</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-angle-right me-2 text-primary"></i> E-Commerce</span>
+                                    <span class="badge bg-primary rounded-pill">5</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-angle-right me-2 text-primary"></i> ERP Solutions</span>
+                                    <span class="badge bg-primary rounded-pill">3</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-angle-right me-2 text-primary"></i> Digital Marketing</span>
+                                    <span class="badge bg-primary rounded-pill">7</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                
+                <!-- Related Services -->
+                <div class="sidebar-widget bg-white p-4 rounded mb-4 shadow-sm" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="mb-4">Related Services</h3>
+                    {% if related_services %}
+                        {% for related in related_services %}
+                        <div class="related-service-item mb-3">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-4">
+                                    <img src="{{ related.image.url }}" alt="{{ related.name }}" class="img-fluid rounded">
+                                </div>
+                                <div class="col-8 ps-3">
+                                    <h5 class="mb-1"><a href="{% url 'services:service_detail' related.slug %}">{{ related.name }}</a></h5>
+                                    <p class="small text-muted mb-0">{{ related.short_description|truncatechars:60 }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="related-service-item mb-3">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-4">
+                                    <img src="{% static 'images/services/ecommerce.avif' %}" alt="E-Commerce Solutions" class="img-fluid rounded">
+                                </div>
+                                <div class="col-8 ps-3">
+                                    <h5 class="mb-1"><a href="#">E-Commerce Solutions</a></h5>
+                                    <p class="small text-muted mb-0">Scalable online stores for business growth</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="related-service-item mb-3">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-4">
+                                    <img src="{% static 'images/services/android.avif' %}" alt="Mobile App Development" class="img-fluid rounded">
+                                </div>
+                                <div class="col-8 ps-3">
+                                    <h5 class="mb-1"><a href="#">Mobile App Development</a></h5>
+                                    <p class="small text-muted mb-0">Custom iOS and Android applications</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="related-service-item mb-3">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-4">
+                                    <img src="{% static 'images/services/digital-marketing.avif' %}" alt="Digital Marketing" class="img-fluid rounded">
+                                </div>
+                                <div class="col-8 ps-3">
+                                    <h5 class="mb-1"><a href="#">Digital Marketing</a></h5>
+                                    <p class="small text-muted mb-0">Strategies to increase online visibility</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Call to Action -->
+                <div class="sidebar-widget bg-primary p-4 rounded text-white" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="mb-3">Need Help?</h3>
+                    <p>Contact our support team for any questions or assistance with our services.</p>
+                    <a href="{% url 'contact:contact' %}" class="btn btn-light">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Projects Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Related Projects</h2>
+            <p>Explore some of our projects that showcase our expertise in this service area.</p>
+        </div>
+        
+        <div class="row">
+            {% if related_projects %}
+                {% for project in related_projects %}
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{{ project.thumbnail.url }}" alt="{{ project.title }}">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>{{ project.title }}</h3>
+                                    <p>{{ project.short_description|truncatechars:60 }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">{{ project.category.name }}</span>
+                        <a href="{% url 'projects:project_detail' project.slug %}" class="stretched-link"></a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default projects if none exist in the database -->
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{% static 'images/projects/project1.jpg' %}" alt="E-Commerce Platform">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>E-Commerce Platform</h3>
+                                    <p>A comprehensive online shopping solution for a retail business.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">E-Commerce</span>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{% static 'images/projects/project2.jpg' %}" alt="Corporate Website">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>Corporate Website</h3>
+                                    <p>Modern and responsive website for a financial services company.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">Web Development</span>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="{% static 'images/projects/project3.jpg' %}" alt="Restaurant App">
+                            <div class="project-overlay">
+                                <div class="project-content">
+                                    <h3>Restaurant App</h3>
+                                    <p>Mobile application for food ordering and restaurant management.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-category">Mobile Development</span>
+                        <a href="#" class="stretched-link"></a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <h2 class="mb-4">Ready to Start Your Project?</h2>
+                <p class="lead mb-4">Contact us today to discuss your requirements and how we can help you achieve your business goals with our {{ service.name|default:"web development" }} services.</p>
+                <div>
+                    <a href="{% url 'contact:service_request' %}" class="btn btn-primary btn-lg me-2">Request a Quote</a>
+                    <a href="{% url 'contact:contact' %}" class="btn btn-outline-primary btn-lg">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Add custom CSS for the service detail page -->
+{% block extra_css %}
+<style>
+    .feature-icon-small {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+    }
+    
+    .process-timeline {
+        position: relative;
+        padding-left: 30px;
+    }
+    
+    .process-timeline:before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        bottom: 0;
+        left: 15px;
+        width: 2px;
+        height: calc(100% - 50px);
+        background-color: var(--gray-light);
+    }
+    
+    .process-item {
+        position: relative;
+        margin-bottom: 40px;
+    }
+    
+    .process-number {
+        position: absolute;
+        left: -30px;
+        top: 0;
+        width: 30px;
+        height: 30px;
+        background-color: var(--primary-color);
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        z-index: 1;
+    }
+    
+    .process-content {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+    }
+    
+    .sidebar-list a {
+        color: var(--dark-color);
+        text-decoration: none;
+        padding: 10px 0;
+        display: block;
+        transition: var(--transition);
+    }
+    
+    .sidebar-list a:hover {
+        color: var(--primary-color);
+    }
+    
+    .related-service-item a {
+        color: var(--dark-color);
+        text-decoration: none;
+        transition: var(--transition);
+    }
+    
+    .related-service-item a:hover {
+        color: var(--primary-color);
+    }
+    
+    .service-detail-img img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        max-height: 500px;
+    }
+</style>
+{% endblock %}
+{% endblock %} 

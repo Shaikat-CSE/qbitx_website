@@ -1,0 +1,488 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block title %}Our Team{% endblock %}
+{% block meta_description %}Meet the talented professionals behind QBITX Solutions - a dedicated team of developers, designers, and digital strategists.{% endblock %}
+{% block meta_keywords %}QBITX team, software development team, tech professionals, web developers, design team, digital experts{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-primary">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center text-white">
+                <h1>Our Team</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home:home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'about:about' %}" class="text-white">About</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Our Team</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Intro Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <h2 class="mb-4">Meet the Talented People Behind Our Success</h2>
+                <p class="lead mb-5">Our diverse team of experts combines technical excellence with creative innovation to deliver exceptional digital solutions for our clients.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Leadership Team Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Leadership Team</h2>
+            <p>The experienced professionals guiding our vision and driving our success.</p>
+        </div>
+        
+        <div class="row">
+            {% if leadership_team %}
+                {% for member in leadership_team %}
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{{ member.image.url }}" alt="{{ member.name }}">
+                        </div>
+                        <div class="team-info">
+                            <h4>{{ member.name }}</h4>
+                            <p>{{ member.position }}</p>
+                            <div class="team-social">
+                                {% if member.linkedin %}
+                                <a href="{{ member.linkedin }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                {% endif %}
+                                {% if member.twitter %}
+                                <a href="{{ member.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
+                                {% endif %}
+                                {% if member.github %}
+                                <a href="{{ member.github }}" target="_blank"><i class="fab fa-github"></i></a>
+                                {% endif %}
+                                {% if member.email %}
+                                <a href="mailto:{{ member.email }}"><i class="fas fa-envelope"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default leadership team members if none exist in the database -->
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{% static 'images/team/ceo.jpg' %}" alt="John Wilson">
+                        </div>
+                        <div class="team-info">
+                            <h4>John Wilson</h4>
+                            <p>Chief Executive Officer</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{% static 'images/team/cto.jpg' %}" alt="Emily Zhang">
+                        </div>
+                        <div class="team-info">
+                            <h4>Emily Zhang</h4>
+                            <p>Chief Technology Officer</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{% static 'images/team/coo.jpg' %}" alt="Michael Rodriguez">
+                        </div>
+                        <div class="team-info">
+                            <h4>Michael Rodriguez</h4>
+                            <p>Chief Operations Officer</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Development Team Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Development Team</h2>
+            <p>The skilled developers who bring our technical solutions to life.</p>
+        </div>
+        
+        <div class="row">
+            {% if development_team %}
+                {% for member in development_team %}
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{{ member.image.url }}" alt="{{ member.name }}">
+                        </div>
+                        <div class="team-info">
+                            <h4>{{ member.name }}</h4>
+                            <p>{{ member.position }}</p>
+                            <div class="team-social">
+                                {% if member.linkedin %}
+                                <a href="{{ member.linkedin }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                {% endif %}
+                                {% if member.github %}
+                                <a href="{{ member.github }}" target="_blank"><i class="fab fa-github"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default development team members if none exist in the database -->
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{% static 'images/team/dev1.jpg' %}" alt="Alex Johnson">
+                        </div>
+                        <div class="team-info">
+                            <h4>Alex Johnson</h4>
+                            <p>Lead Full-Stack Developer</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{% static 'images/team/dev2.jpg' %}" alt="Sarah Chen">
+                        </div>
+                        <div class="team-info">
+                            <h4>Sarah Chen</h4>
+                            <p>Frontend Developer</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{% static 'images/team/dev3.jpg' %}" alt="David Williams">
+                        </div>
+                        <div class="team-info">
+                            <h4>David Williams</h4>
+                            <p>Backend Developer</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{% static 'images/team/dev4.jpg' %}" alt="Lisa Patel">
+                        </div>
+                        <div class="team-info">
+                            <h4>Lisa Patel</h4>
+                            <p>Mobile App Developer</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Design Team Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Design Team</h2>
+            <p>The creative minds crafting beautiful and functional user experiences.</p>
+        </div>
+        
+        <div class="row">
+            {% if design_team %}
+                {% for member in design_team %}
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{{ member.image.url }}" alt="{{ member.name }}">
+                        </div>
+                        <div class="team-info">
+                            <h4>{{ member.name }}</h4>
+                            <p>{{ member.position }}</p>
+                            <div class="team-social">
+                                {% if member.linkedin %}
+                                <a href="{{ member.linkedin }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                {% endif %}
+                                {% if member.dribbble %}
+                                <a href="{{ member.dribbble }}" target="_blank"><i class="fab fa-dribbble"></i></a>
+                                {% endif %}
+                                {% if member.behance %}
+                                <a href="{{ member.behance }}" target="_blank"><i class="fab fa-behance"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default design team members if none exist in the database -->
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{% static 'images/team/design1.jpg' %}" alt="Jessica Kim">
+                        </div>
+                        <div class="team-info">
+                            <h4>Jessica Kim</h4>
+                            <p>UI/UX Design Lead</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-dribbble"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{% static 'images/team/design2.jpg' %}" alt="Carlos Martinez">
+                        </div>
+                        <div class="team-info">
+                            <h4>Carlos Martinez</h4>
+                            <p>Graphic Designer</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-behance"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{% static 'images/team/design3.jpg' %}" alt="Rachel Thompson">
+                        </div>
+                        <div class="team-info">
+                            <h4>Rachel Thompson</h4>
+                            <p>UX Researcher</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-medium-m"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Marketing & Business Team Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Marketing & Business Team</h2>
+            <p>The strategic thinkers helping our clients achieve their business goals.</p>
+        </div>
+        
+        <div class="row">
+            {% if marketing_team %}
+                {% for member in marketing_team %}
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{{ member.image.url }}" alt="{{ member.name }}">
+                        </div>
+                        <div class="team-info">
+                            <h4>{{ member.name }}</h4>
+                            <p>{{ member.position }}</p>
+                            <div class="team-social">
+                                {% if member.linkedin %}
+                                <a href="{{ member.linkedin }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                {% endif %}
+                                {% if member.twitter %}
+                                <a href="{{ member.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default marketing team members if none exist in the database -->
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{% static 'images/team/marketing1.jpg' %}" alt="Daniel Brown">
+                        </div>
+                        <div class="team-info">
+                            <h4>Daniel Brown</h4>
+                            <p>Marketing Director</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{% static 'images/team/marketing2.jpg' %}" alt="Samantha Lee">
+                        </div>
+                        <div class="team-info">
+                            <h4>Samantha Lee</h4>
+                            <p>Digital Marketing Specialist</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{% static 'images/team/marketing3.jpg' %}" alt="Robert Turner">
+                        </div>
+                        <div class="team-info">
+                            <h4>Robert Turner</h4>
+                            <p>Business Analyst</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="{% static 'images/team/marketing4.jpg' %}" alt="Olivia Garcia">
+                        </div>
+                        <div class="team-info">
+                            <h4>Olivia Garcia</h4>
+                            <p>Project Manager</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Team Values Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
+                <img src="{% static 'images/team/team-collaboration.jpg' %}" alt="Team Collaboration" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <h2 class="mb-4">Our Team Values</h2>
+                <p class="lead mb-4">At QBITX Solutions, our team is united by shared values that define how we work and collaborate.</p>
+                
+                <div class="team-value mb-3">
+                    <h5><i class="fas fa-hands-helping text-primary me-2"></i> Collaboration</h5>
+                    <p>We believe in the power of teamwork, bringing together diverse perspectives and skills to create exceptional solutions.</p>
+                </div>
+                
+                <div class="team-value mb-3">
+                    <h5><i class="fas fa-lightbulb text-primary me-2"></i> Innovation</h5>
+                    <p>We're constantly exploring new technologies and approaches, pushing boundaries to deliver cutting-edge solutions.</p>
+                </div>
+                
+                <div class="team-value mb-3">
+                    <h5><i class="fas fa-graduation-cap text-primary me-2"></i> Continuous Learning</h5>
+                    <p>We're committed to ongoing professional development, staying ahead of industry trends and expanding our expertise.</p>
+                </div>
+                
+                <div class="team-value">
+                    <h5><i class="fas fa-heart text-primary me-2"></i> Passion</h5>
+                    <p>We're passionate about what we do, bringing enthusiasm and dedication to every project we undertake.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Join Our Team Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0" data-aos="fade-left">
+                <img src="{% static 'images/team/join-team.jpg' %}" alt="Join Our Team" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-lg-6 order-lg-1" data-aos="fade-right">
+                <h2 class="mb-4">Join Our Team</h2>
+                <p class="lead mb-4">We're always looking for talented individuals who are passionate about technology and innovation to join our growing team.</p>
+                <p>At QBITX Solutions, we offer:</p>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Challenging and meaningful work</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Opportunities for professional growth</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Collaborative and supportive work environment</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Competitive compensation and benefits</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Work-life balance and flexible scheduling</li>
+                </ul>
+                <p class="mt-4">If you're interested in joining our team, check out our current openings or send your resume to careers@qbitxsolutions.com.</p>
+                <a href="#" class="btn btn-primary mt-3">View Open Positions</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <h2 class="mb-4">Ready to Work With Our Team?</h2>
+                <p class="lead mb-4">Let our expert team help you achieve your digital transformation goals with innovative solutions tailored to your business needs.</p>
+                <div>
+                    <a href="{% url 'contact:contact' %}" class="btn btn-light btn-lg me-3">Contact Us</a>
+                    <a href="{% url 'contact:service_request' %}" class="btn btn-outline-light btn-lg">Request a Quote</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 
